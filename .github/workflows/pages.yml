@@ -26,7 +26,8 @@ jobs:
           bundler-cache: true
           working-directory: docs
       - name: Build site
-        run: bundle exec jekyll build --source docs --destination _site --baseurl "/cli-schema"
+        working-directory: docs
+        run: bundle exec jekyll build --destination ../_site --baseurl "/cli-schema"
       - uses: actions/upload-pages-artifact@v3
 
   deploy:
