@@ -1,6 +1,5 @@
 ---
-layout: home
-title: CLI Schema
+layout: default
 ---
 
 <div class="hero">
@@ -8,7 +7,7 @@ title: CLI Schema
   <p class="tagline">The open standard for describing command-line interfaces.</p>
   <p class="sub">Machine-readable. Language-agnostic. Built for agents, IDEs, shells, and docs.</p>
   <div class="cta-group">
-    <a href="/cli-schema/spec.html" class="btn btn-primary">Read the spec</a>
+    <a href="/cli-schema/spec/" class="btn btn-primary">Read the spec</a>
     <a href="https://github.com/cli-schema/cli-schema" class="btn btn-secondary">GitHub</a>
   </div>
 </div>
