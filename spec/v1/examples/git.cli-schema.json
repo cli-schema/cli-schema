@@ -1,0 +1,381 @@
+{
+  "schemaVersion": 1,
+  "name": "git",
+  "version": "2.44.0",
+  "description": "Git — the stupid content tracker",
+  "tags": ["vcs", "scm"],
+  "requiresAuth": false,
+  "reservedMetaCommands": ["__schema"],
+  "environment": {
+    "variables": [
+      {
+        "name": "GIT_AUTHOR_NAME",
+        "required": false,
+        "description": "Author name for commits"
+      },
+      {
+        "name": "GIT_AUTHOR_EMAIL",
+        "required": false,
+        "description": "Author email for commits"
+      },
+      {
+        "name": "GIT_COMMITTER_NAME",
+        "required": false,
+        "description": "Committer name for commits"
+      },
+      {
+        "name": "GIT_COMMITTER_EMAIL",
+        "required": false,
+        "description": "Committer email for commits"
+      },
+      {
+        "name": "GIT_SSH_COMMAND",
+        "required": false,
+        "description": "SSH command used when pushing/fetching over SSH"
+      },
+      {
+        "name": "GIT_DIR",
+        "required": false,
+        "description": "Path to the .git directory; overrides auto-detection"
+      },
+      {
+        "name": "GIT_EDITOR",
+        "required": false,
+        "description": "Editor for commit messages, rebase instructions, etc."
+      }
+    ],
+    "configFiles": [
+      {
+        "path": "~/.gitconfig",
+        "description": "User-level git configuration"
+      },
+      {
+        "path": "~/.config/git/config",
+        "description": "XDG-compliant user-level git configuration"
+      },
+      {
+        "path": ".git/config",
+        "description": "Repository-level git configuration"
+      }
+    ]
+  },
+  "globalOptions": [
+    {
+      "role": "flag",
+      "name": "version",
+      "type": "boolean",
+      "required": false,
+      "summary": "Print the git version"
+    },
+    {
+      "role": "flag",
+      "name": "help",
+      "type": "boolean",
+      "required": false,
+      "summary": "Print synopsis and a list of the most commonly used commands"
+    },
+    {
+      "role": "flag",
+      "name": "C",
+      "type": "string",
+      "required": false,
+      "summary": "Run as if git was started in the given path",
+      "repeatable": true
+    },
+    {
+      "role": "flag",
+      "name": "no-pager",
+      "shortName": "P",
+      "type": "boolean",
+      "required": false,
+      "summary": "Do not pipe git output into a pager"
+    }
+  ],
+  "commands": [
+    {
+      "name": "commit",
+      "summary": "Record changes to the repository",
+      "intent": {
+        "destructive": false,
+        "idempotent": false,
+        "scope": "file",
+        "requiresConfirmation": false,
+        "requiresAuth": false
+      },
+      "parameters": [
+        {
+          "role": "flag",
+          "name": "message",
+          "shortName": "m",
+          "type": "string",
+          "required": false,
+          "summary": "Use the given message as the commit message",
+          "repeatable": true
+        },
+        {
+          "role": "flag",
+          "name": "all",
+          "shortName": "a",
+          "type": "boolean",
+          "required": false,
+          "summary": "Stage all tracked modified and deleted files before committing"
+        },
+        {
+          "role": "flag",
+          "name": "amend",
+          "type": "boolean",
+          "required": false,
+          "summary": "Amend the tip of the current branch"
+        },
+        {
+          "role": "dryRun",
+          "name": "dry-run",
+          "type": "boolean",
+          "required": false,
+          "summary": "Show what would be committed without actually committing"
+        }
+      ],
+      "examples": [
+        "git commit -m 'fix: correct off-by-one error'",
+        "git commit --amend --no-edit",
+        "git commit --dry-run"
+      ]
+    },
+    {
+      "name": "push",
+      "summary": "Update remote refs along with associated objects",
+      "intent": {
+        "destructive": false,
+        "idempotent": false,
+        "scope": "global",
+        "requiresConfirmation": false,
+        "requiresAuth": true
+      },
+      "parameters": [
+        {
+          "role": "positional",
+          "name": "remote",
+          "type": "string",
+          "required": false,
+          "summary": "Remote name (default: origin)"
+        },
+        {
+          "role": "positional",
+          "name": "refspec",
+          "type": "string",
+          "required": false,
+          "summary": "Branch or refspec to push"
+        },
+        {
+          "role": "flag",
+          "name": "force",
+          "shortName": "f",
+          "type": "boolean",
+          "required": false,
+          "summary": "Force the push (potentially destructive)"
+        },
+        {
+          "role": "flag",
+          "name": "force-with-lease",
+          "type": "boolean",
+          "required": false,
+          "summary": "Force push only if remote ref matches expected value"
+        },
+        {
+          "role": "dryRun",
+          "name": "dry-run",
+          "shortName": "n",
+          "type": "boolean",
+          "required": false,
+          "summary": "Show what would be pushed without actually pushing"
+        },
+        {
+          "role": "flag",
+          "name": "set-upstream",
+          "shortName": "u",
+          "type": "boolean",
+          "required": false,
+          "summary": "Set the upstream tracking reference"
+        }
+      ],
+      "examples": [
+        "git push origin main",
+        "git push --dry-run",
+        "git push --force-with-lease"
+      ]
+    },
+    {
+      "name": "pull",
+      "summary": "Fetch from and integrate with another repository or local branch",
+      "intent": {
+        "destructive": false,
+        "idempotent": false,
+        "scope": "directory",
+        "requiresConfirmation": false,
+        "requiresAuth": true
+      },
+      "parameters": [
+        {
+          "role": "positional",
+          "name": "remote",
+          "type": "string",
+          "required": false,
+          "summary": "Remote to pull from"
+        },
+        {
+          "role": "flag",
+          "name": "rebase",
+          "shortName": "r",
+          "type": "boolean",
+          "required": false,
+          "summary": "Rebase instead of merge"
+        },
+        {
+          "role": "flag",
+          "name": "no-commit",
+          "type": "boolean",
+          "required": false,
+          "summary": "Perform merge but do not autocommit"
+        }
+      ]
+    },
+    {
+      "name": "clone",
+      "summary": "Clone a repository into a new directory",
+      "intent": {
+        "destructive": false,
+        "idempotent": false,
+        "scope": "directory",
+        "requiresConfirmation": false,
+        "requiresAuth": false
+      },
+      "parameters": [
+        {
+          "role": "positional",
+          "name": "repository",
+          "type": "string",
+          "required": true,
+          "summary": "Repository URL or path to clone"
+        },
+        {
+          "role": "positional",
+          "name": "directory",
+          "type": "string",
+          "required": false,
+          "summary": "Local directory name"
+        },
+        {
+          "role": "flag",
+          "name": "depth",
+          "type": "integer",
+          "required": false,
+          "summary": "Create a shallow clone with a history truncated to this number of commits",
+          "validations": [{ "kind": "range", "min": "1" }]
+        },
+        {
+          "role": "flag",
+          "name": "branch",
+          "shortName": "b",
+          "type": "string",
+          "required": false,
+          "summary": "Checkout this branch instead of HEAD"
+        },
+        {
+          "role": "flag",
+          "name": "recurse-submodules",
+          "type": "boolean",
+          "required": false,
+          "summary": "Initialize and clone submodules"
+        }
+      ]
+    },
+    {
+      "name": "reset",
+      "summary": "Reset current HEAD to the specified state",
+      "tags": ["dangerous"],
+      "intent": {
+        "destructive": true,
+        "idempotent": false,
+        "scope": "directory",
+        "requiresConfirmation": false,
+        "requiresAuth": false
+      },
+      "parameters": [
+        {
+          "role": "positional",
+          "name": "commit",
+          "type": "string",
+          "required": false,
+          "summary": "Commit to reset to (default: HEAD)"
+        },
+        {
+          "role": "flag",
+          "name": "hard",
+          "type": "boolean",
+          "required": false,
+          "summary": "Discard all changes in working tree and index"
+        },
+        {
+          "role": "flag",
+          "name": "soft",
+          "type": "boolean",
+          "required": false,
+          "summary": "Keep working tree and index; only reset HEAD"
+        },
+        {
+          "role": "flag",
+          "name": "mixed",
+          "type": "boolean",
+          "required": false,
+          "summary": "Keep working tree; reset index (default)"
+        }
+      ]
+    },
+    {
+      "name": "log",
+      "summary": "Show commit logs",
+      "intent": {
+        "destructive": false,
+        "idempotent": true,
+        "scope": "file",
+        "requiresConfirmation": false,
+        "requiresAuth": false
+      },
+      "output": {
+        "formats": ["json", "text", "oneline", "format"],
+        "formatFlag": "--format"
+      },
+      "parameters": [
+        {
+          "role": "flag",
+          "name": "oneline",
+          "type": "boolean",
+          "required": false,
+          "summary": "Shorthand for --format=oneline --abbrev-commit"
+        },
+        {
+          "role": "flag",
+          "name": "graph",
+          "type": "boolean",
+          "required": false,
+          "summary": "Draw a text-based graphical representation"
+        },
+        {
+          "role": "flag",
+          "name": "n",
+          "shortName": "n",
+          "type": "integer",
+          "required": false,
+          "summary": "Limit the number of commits to output"
+        },
+        {
+          "role": "flag",
+          "name": "format",
+          "type": "string",
+          "required": false,
+          "summary": "Output format (oneline, short, medium, full, fuller, email, raw, or a format string)"
+        }
+      ]
+    }
+  ]
+}

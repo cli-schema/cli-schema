@@ -1,0 +1,446 @@
+{
+  "schemaVersion": 1,
+  "name": "gh",
+  "version": "2.45.0",
+  "description": "GitHub CLI — bring GitHub to your terminal",
+  "tags": ["github", "vcs", "devtools"],
+  "requiresAuth": true,
+  "authCommands": ["auth login", "auth logout", "auth status"],
+  "reservedMetaCommands": ["__schema"],
+  "environment": {
+    "variables": [
+      {
+        "name": "GITHUB_TOKEN",
+        "required": false,
+        "description": "Auth token; overrides interactive gh auth login"
+      },
+      {
+        "name": "GH_TOKEN",
+        "required": false,
+        "description": "Alias for GITHUB_TOKEN"
+      },
+      {
+        "name": "GH_HOST",
+        "required": false,
+        "description": "GitHub hostname for GitHub Enterprise (e.g. github.mycompany.com)"
+      },
+      {
+        "name": "GH_REPO",
+        "required": false,
+        "description": "Default repository in OWNER/REPO format; overrides git remote detection"
+      },
+      {
+        "name": "NO_COLOR",
+        "required": false,
+        "description": "Disable ANSI color output when set to any non-empty value"
+      }
+    ],
+    "configFiles": [
+      {
+        "path": "~/.config/gh/config.yml",
+        "description": "User-level configuration including default editor, pager, and aliases"
+      },
+      {
+        "path": "~/.config/gh/hosts.yml",
+        "description": "Per-host authentication tokens and settings"
+      }
+    ]
+  },
+  "globalOptions": [
+    {
+      "role": "flag",
+      "name": "help",
+      "shortName": "h",
+      "type": "boolean",
+      "required": false,
+      "summary": "Show help for this command"
+    },
+    {
+      "role": "flag",
+      "name": "repo",
+      "shortName": "R",
+      "type": "string",
+      "required": false,
+      "summary": "Select another repository using the [HOST/]OWNER/REPO format"
+    }
+  ],
+  "namespaces": [
+    {
+      "segment": "auth",
+      "summary": "Authenticate gh and git with GitHub",
+      "commands": [
+        {
+          "name": "login",
+          "summary": "Log in to a GitHub account",
+          "intent": {
+            "destructive": false,
+            "idempotent": true,
+            "scope": "global",
+            "requiresConfirmation": true,
+            "requiresAuth": false
+          },
+          "parameters": [
+            {
+              "role": "flag",
+              "name": "hostname",
+              "shortName": "h",
+              "type": "string",
+              "required": false,
+              "summary": "The hostname of the GitHub instance to authenticate with"
+            },
+            {
+              "role": "flag",
+              "name": "with-token",
+              "type": "boolean",
+              "required": false,
+              "summary": "Read token from standard input (non-interactive)"
+            },
+            {
+              "role": "flag",
+              "name": "web",
+              "shortName": "w",
+              "type": "boolean",
+              "required": false,
+              "summary": "Open a browser to authenticate"
+            },
+            {
+              "role": "confirmationSkip",
+              "name": "git-credential-helper",
+              "type": "string",
+              "required": false,
+              "summary": "Set credential helper (skips prompt)"
+            }
+          ],
+          "examples": [
+            "gh auth login",
+            "gh auth login --hostname github.mycompany.com",
+            "echo $TOKEN | gh auth login --with-token"
+          ]
+        },
+        {
+          "name": "logout",
+          "summary": "Log out of a GitHub account",
+          "intent": {
+            "destructive": false,
+            "idempotent": true,
+            "scope": "global",
+            "requiresConfirmation": false,
+            "requiresAuth": true
+          },
+          "parameters": [
+            {
+              "role": "flag",
+              "name": "hostname",
+              "shortName": "h",
+              "type": "string",
+              "required": false,
+              "summary": "The hostname of the GitHub instance to log out from"
+            }
+          ]
+        },
+        {
+          "name": "status",
+          "summary": "Display active account and auth state",
+          "intent": {
+            "destructive": false,
+            "idempotent": true,
+            "scope": "global",
+            "requiresConfirmation": false,
+            "requiresAuth": false
+          },
+          "output": {
+            "formats": ["json"],
+            "formatFlag": "--json"
+          },
+          "parameters": []
+        }
+      ]
+    },
+    {
+      "segment": "repo",
+      "summary": "Manage repositories",
+      "commands": [
+        {
+          "name": "clone",
+          "summary": "Clone a repository locally",
+          "intent": {
+            "destructive": false,
+            "idempotent": false,
+            "scope": "directory",
+            "requiresConfirmation": false,
+            "requiresAuth": false
+          },
+          "parameters": [
+            {
+              "role": "positional",
+              "name": "repository",
+              "type": "string",
+              "required": true,
+              "summary": "Repository to clone in OWNER/REPO or URL format"
+            },
+            {
+              "role": "positional",
+              "name": "directory",
+              "type": "string",
+              "required": false,
+              "summary": "Local directory to clone into"
+            }
+          ],
+          "examples": [
+            "gh repo clone cli/cli",
+            "gh repo clone https://github.com/cli/cli mydir"
+          ]
+        },
+        {
+          "name": "create",
+          "summary": "Create a new GitHub repository",
+          "intent": {
+            "destructive": false,
+            "idempotent": false,
+            "scope": "global",
+            "requiresConfirmation": true,
+            "requiresAuth": true
+          },
+          "parameters": [
+            {
+              "role": "positional",
+              "name": "name",
+              "type": "string",
+              "required": false,
+              "summary": "Name of the new repository"
+            },
+            {
+              "role": "flag",
+              "name": "public",
+              "type": "boolean",
+              "required": false,
+              "summary": "Make the new repository public"
+            },
+            {
+              "role": "flag",
+              "name": "private",
+              "type": "boolean",
+              "required": false,
+              "summary": "Make the new repository private"
+            },
+            {
+              "role": "confirmationSkip",
+              "name": "confirm",
+              "shortName": "y",
+              "type": "boolean",
+              "required": false,
+              "summary": "Skip confirmation prompt"
+            }
+          ]
+        },
+        {
+          "name": "delete",
+          "summary": "Delete a GitHub repository",
+          "tags": ["admin", "dangerous"],
+          "intent": {
+            "destructive": true,
+            "idempotent": false,
+            "scope": "global",
+            "requiresConfirmation": true,
+            "requiresAuth": true
+          },
+          "parameters": [
+            {
+              "role": "positional",
+              "name": "repository",
+              "type": "string",
+              "required": false,
+              "summary": "Repository to delete in OWNER/REPO format"
+            },
+            {
+              "role": "confirmationSkip",
+              "name": "yes",
+              "type": "boolean",
+              "required": false,
+              "summary": "Skip confirmation prompt"
+            }
+          ],
+          "examples": [
+            "gh repo delete owner/repo --yes"
+          ]
+        },
+        {
+          "name": "list",
+          "summary": "List repositories owned by user or organization",
+          "aliases": ["ls"],
+          "intent": {
+            "destructive": false,
+            "idempotent": true,
+            "scope": "global",
+            "requiresConfirmation": false,
+            "requiresAuth": true
+          },
+          "output": {
+            "formats": ["json", "table"],
+            "formatFlag": "--json"
+          },
+          "parameters": [
+            {
+              "role": "flag",
+              "name": "limit",
+              "shortName": "L",
+              "type": "integer",
+              "required": false,
+              "defaultValue": "30",
+              "summary": "Maximum number of repositories to list",
+              "validations": [
+                { "kind": "range", "min": "1", "max": "1000" }
+              ]
+            },
+            {
+              "role": "flag",
+              "name": "json",
+              "type": "string",
+              "required": false,
+              "summary": "Output JSON with specified fields (comma-separated)"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "segment": "pr",
+      "summary": "Manage pull requests",
+      "commands": [
+        {
+          "name": "create",
+          "summary": "Create a pull request",
+          "intent": {
+            "destructive": false,
+            "idempotent": false,
+            "scope": "global",
+            "requiresConfirmation": true,
+            "requiresAuth": true
+          },
+          "parameters": [
+            {
+              "role": "flag",
+              "name": "title",
+              "shortName": "t",
+              "type": "string",
+              "required": false,
+              "summary": "Title of the pull request"
+            },
+            {
+              "role": "flag",
+              "name": "body",
+              "shortName": "b",
+              "type": "string",
+              "required": false,
+              "summary": "Body of the pull request"
+            },
+            {
+              "role": "flag",
+              "name": "base",
+              "shortName": "B",
+              "type": "string",
+              "required": false,
+              "summary": "Target branch for the pull request"
+            },
+            {
+              "role": "flag",
+              "name": "draft",
+              "shortName": "d",
+              "type": "boolean",
+              "required": false,
+              "summary": "Mark pull request as a draft"
+            },
+            {
+              "role": "confirmationSkip",
+              "name": "fill",
+              "shortName": "f",
+              "type": "boolean",
+              "required": false,
+              "summary": "Use commit info for title and body without prompting"
+            }
+          ]
+        },
+        {
+          "name": "merge",
+          "summary": "Merge a pull request",
+          "intent": {
+            "destructive": false,
+            "idempotent": false,
+            "scope": "global",
+            "requiresConfirmation": true,
+            "requiresAuth": true
+          },
+          "parameters": [
+            {
+              "role": "positional",
+              "name": "number",
+              "type": "integer",
+              "required": false,
+              "summary": "Pull request number, URL, or branch"
+            },
+            {
+              "role": "flag",
+              "name": "squash",
+              "shortName": "s",
+              "type": "boolean",
+              "required": false,
+              "summary": "Squash-merge the commits"
+            },
+            {
+              "role": "flag",
+              "name": "rebase",
+              "shortName": "r",
+              "type": "boolean",
+              "required": false,
+              "summary": "Rebase the commits onto the base branch"
+            },
+            {
+              "role": "confirmationSkip",
+              "name": "yes",
+              "shortName": "y",
+              "type": "boolean",
+              "required": false,
+              "summary": "Skip confirmation prompt"
+            },
+            {
+              "role": "flag",
+              "name": "delete-branch",
+              "shortName": "d",
+              "type": "boolean",
+              "required": false,
+              "summary": "Delete the local and remote branch after merge"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "segment": "run",
+      "summary": "View and manage GitHub Actions workflow runs",
+      "commands": [
+        {
+          "name": "watch",
+          "summary": "Watch a run until it completes, showing its progress",
+          "streaming": true,
+          "longRunning": true,
+          "intent": {
+            "destructive": false,
+            "idempotent": true,
+            "scope": "global",
+            "requiresConfirmation": false,
+            "requiresAuth": true
+          },
+          "parameters": [
+            {
+              "role": "positional",
+              "name": "run-id",
+              "type": "integer",
+              "required": false,
+              "summary": "The ID of the run to watch"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

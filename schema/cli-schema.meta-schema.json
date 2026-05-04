@@ -1,0 +1,212 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cli-schema.github.io/cli-schema/schema/cli-schema.meta-schema.json",
+  "title": "CLI Schema",
+  "description": "Meta-schema for CLI Schema documents (specification v1)",
+  "type": "object",
+  "$defs": {
+    "deprecation": {
+      "oneOf": [
+        { "type": "boolean", "const": true },
+        {
+          "type": "object",
+          "properties": {
+            "message": { "type": "string" },
+            "since": { "type": "string" },
+            "removedIn": { "type": "string" }
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "constraint": {
+      "type": "object",
+      "required": ["kind"],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "range", "timeSpanRange", "length", "regex",
+            "allowed", "denied", "email", "url", "uriScheme",
+            "fileExtensions", "existing", "nonExisting", "rejectSymbolicLinks"
+          ]
+        },
+        "min": { "type": "string" },
+        "max": { "type": "string" },
+        "pattern": { "type": "string" },
+        "values": { "type": "array", "items": { "type": "string" } }
+      },
+      "additionalProperties": false
+    },
+    "parameter": {
+      "type": "object",
+      "required": ["role", "name", "type", "required"],
+      "properties": {
+        "role": {
+          "type": "string",
+          "enum": ["flag", "positional", "confirmationSkip", "dryRun"]
+        },
+        "name": { "type": "string" },
+        "shortName": { "type": "string", "maxLength": 1 },
+        "type": {
+          "type": "string",
+          "enum": ["string", "integer", "number", "boolean", "array", "enum"]
+        },
+        "required": { "type": "boolean" },
+        "summary": { "type": "string" },
+        "defaultValue": { "type": "string" },
+        "repeatable": { "type": "boolean", "default": false },
+        "separator": { "type": "string" },
+        "aliases": { "type": "array", "items": { "type": "string" } },
+        "enumValues": { "type": "array", "items": { "type": "string" } },
+        "elementType": {
+          "type": "string",
+          "enum": ["string", "integer", "number", "boolean"]
+        },
+        "hidden": { "type": "boolean", "default": false },
+        "deprecated": { "$ref": "#/$defs/deprecation" },
+        "validations": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/constraint" }
+        }
+      },
+      "additionalProperties": {
+        "if": { "type": "string" },
+        "then": { "pattern": "^x-" }
+      }
+    },
+    "intent": {
+      "type": "object",
+      "properties": {
+        "destructive": { "type": "boolean" },
+        "idempotent": { "type": "boolean" },
+        "scope": {
+          "type": "string",
+          "enum": ["file", "directory", "global"]
+        },
+        "requiresConfirmation": { "type": "boolean" },
+        "requiresAuth": { "type": "boolean" }
+      },
+      "additionalProperties": false
+    },
+    "output": {
+      "type": "object",
+      "properties": {
+        "formats": { "type": "array", "items": { "type": "string" } },
+        "formatFlag": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "envVar": {
+      "type": "object",
+      "required": ["name"],
+      "properties": {
+        "name": { "type": "string" },
+        "required": { "type": "boolean", "default": false },
+        "description": { "type": "string" },
+        "defaultValue": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "configFile": {
+      "type": "object",
+      "required": ["path"],
+      "properties": {
+        "path": { "type": "string" },
+        "description": { "type": "string" },
+        "required": { "type": "boolean", "default": false }
+      },
+      "additionalProperties": false
+    },
+    "environment": {
+      "type": "object",
+      "properties": {
+        "variables": { "type": "array", "items": { "$ref": "#/$defs/envVar" } },
+        "configFiles": { "type": "array", "items": { "$ref": "#/$defs/configFile" } }
+      },
+      "additionalProperties": false
+    },
+    "deprecationFull": {
+      "oneOf": [
+        { "type": "boolean", "const": true },
+        {
+          "type": "object",
+          "properties": {
+            "message": { "type": "string" },
+            "since": { "type": "string" },
+            "removedIn": { "type": "string" }
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "defaultHandler": {
+      "type": "object",
+      "required": ["kind"],
+      "properties": {
+        "kind": { "type": "string", "enum": ["root", "namespace"] },
+        "summary": { "type": "string" },
+        "notes": { "type": "string" },
+        "usage": { "type": "string" },
+        "examples": { "type": "array", "items": { "type": "string" } },
+        "parameters": { "type": "array", "items": { "$ref": "#/$defs/parameter" } },
+        "hidden": { "type": "boolean", "default": false }
+      },
+      "additionalProperties": false
+    },
+    "command": {
+      "type": "object",
+      "required": ["name"],
+      "properties": {
+        "path": { "type": "array", "items": { "type": "string" } },
+        "name": { "type": "string" },
+        "summary": { "type": "string" },
+        "notes": { "type": "string" },
+        "usage": { "type": "string" },
+        "examples": { "type": "array", "items": { "type": "string" } },
+        "parameters": { "type": "array", "items": { "$ref": "#/$defs/parameter" } },
+        "aliases": { "type": "array", "items": { "type": "string" } },
+        "hidden": { "type": "boolean", "default": false },
+        "tags": { "type": "array", "items": { "type": "string" } },
+        "deprecated": { "$ref": "#/$defs/deprecationFull" },
+        "intent": { "$ref": "#/$defs/intent" },
+        "output": { "$ref": "#/$defs/output" },
+        "streaming": { "type": "boolean", "default": false },
+        "longRunning": { "type": "boolean", "default": false }
+      }
+    },
+    "namespace": {
+      "type": "object",
+      "required": ["segment"],
+      "properties": {
+        "segment": { "type": "string" },
+        "summary": { "type": "string" },
+        "notes": { "type": "string" },
+        "options": { "type": "array", "items": { "$ref": "#/$defs/parameter" } },
+        "defaultCommand": { "$ref": "#/$defs/defaultHandler" },
+        "commands": { "type": "array", "items": { "$ref": "#/$defs/command" } },
+        "namespaces": { "type": "array", "items": { "$ref": "#/$defs/namespace" } }
+      },
+      "additionalProperties": false
+    }
+  },
+  "required": ["schemaVersion", "name", "version"],
+  "properties": {
+    "schemaVersion": {
+      "type": "integer",
+      "const": 1
+    },
+    "name": { "type": "string" },
+    "version": { "type": "string" },
+    "description": { "type": "string" },
+    "tags": { "type": "array", "items": { "type": "string" } },
+    "requiresAuth": { "type": "boolean" },
+    "authCommands": { "type": "array", "items": { "type": "string" } },
+    "environment": { "$ref": "#/$defs/environment" },
+    "reservedMetaCommands": { "type": "array", "items": { "type": "string" } },
+    "globalOptions": { "type": "array", "items": { "$ref": "#/$defs/parameter" } },
+    "rootDefault": { "$ref": "#/$defs/defaultHandler" },
+    "commands": { "type": "array", "items": { "$ref": "#/$defs/command" } },
+    "namespaces": { "type": "array", "items": { "$ref": "#/$defs/namespace" } }
+  }
+}
