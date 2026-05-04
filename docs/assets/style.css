@@ -12,6 +12,21 @@
   --radius: 6px;
 }
 
+/* WIP banner */
+.wip-banner {
+  background: #fff8c5;
+  border-bottom: 1px solid #e3b341;
+  color: #633c00;
+  text-align: center;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+}
+
+.wip-banner a {
+  color: #633c00;
+  font-weight: 600;
+}
+
 /* Hero section */
 .hero {
   text-align: center;
