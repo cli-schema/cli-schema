@@ -81,9 +81,20 @@
     text-decoration: none;
   }
 
-  .nav-avatar {
+  .nav-avatar-wrap {
     width: 38px; height: 38px;
+    overflow: hidden;
     flex-shrink: 0;
+    position: relative;
+  }
+
+  /* SVG viewBox is 680×280; icon square is 160×160 at (260,60).
+     Scale so 160px → 38px (×0.2375): rendered SVG = 162×67px.
+     Offset to crop: left = -(260×0.2375) = -62px, top = -(60×0.2375) = -14px */
+  .nav-avatar {
+    position: absolute;
+    width: 162px; height: 67px;
+    left: -62px; top: -14px;
   }
 
   .nav-wordmark {
@@ -559,7 +570,9 @@
 <nav>
   <div class="inner">
   <a class="nav-logo" href="#">
-    <img class="nav-avatar" src="/_static/logo.svg" alt="CLI Schema"/>
+    <div class="nav-avatar-wrap">
+      <img class="nav-avatar" src="/_static/logo.svg" alt="CLI Schema"/>
+    </div>
     <span class="nav-wordmark">cli-schema</span>
   </a>
   <ul class="nav-links">
