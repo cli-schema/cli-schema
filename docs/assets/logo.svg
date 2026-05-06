@@ -1,0 +1,18 @@
+<svg width="100%" viewBox="0 0 680 280" role="img" xmlns="http://www.w3.org/2000/svg" style="">
+  <title style="fill:rgb(0, 0, 0);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto">CLI Schema logo</title>
+  <desc style="fill:rgb(0, 0, 0);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto">CLI Schema avatar — corner glow, double border, dollar and pipe</desc>
+  <defs>
+    <radialGradient id="av-glow" cx="15%" cy="85%" r="70%">
+      <stop offset="0%" stop-color="#0d3d2e"/>
+      <stop offset="100%" stop-color="#080b0f"/>
+    </radialGradient>
+    <clipPath id="av-clip"><rect x="260" y="60" width="160" height="160" rx="10"/></clipPath>
+  </defs>
+
+  <!-- Avatar only, centered -->
+  <rect x="260" y="60" width="160" height="160" rx="10" fill="url(#av-glow)" stroke="#1D9E75" stroke-width="3" style="stroke:rgb(29, 158, 117);color:rgb(0, 0, 0);stroke-width:3px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <rect x="267" y="67" width="146" height="146" rx="7" fill="none" stroke="#0a3d2e" stroke-width="1.5" style="fill:none;stroke:rgb(10, 61, 46);color:rgb(0, 0, 0);stroke-width:1.5px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <text x="295" y="174" text-anchor="start" font-family="'Courier New', monospace" font-size="120" font-weight="700" fill="#1D9E75" style="fill:rgb(29, 158, 117);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Courier New&quot;, monospace;font-size:120px;font-weight:700;text-anchor:start;dominant-baseline:auto">$</text>
+  <rect x="375" y="90" width="10" height="94" rx="2" fill="#e8e8e8" style="fill:rgb(232, 232, 232);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+
+</svg>
