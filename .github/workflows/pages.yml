@@ -23,6 +23,9 @@ jobs:
       - name: Overwrite index with custom landing page
         run: cp docs/cli-schema-landing.html .artifacts/docs/html/index.html
 
+      - name: Copy robots.txt
+        run: cp docs/robots.txt .artifacts/docs/html/robots.txt
+
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@v3
         with:
