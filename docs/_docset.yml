@@ -1,0 +1,28 @@
+project: 'cli-schema'
+max_toc_depth: 2
+dev_docs: true
+
+branding:
+  icon: assets/logo.svg
+  header-bg: "#2d6a4f"
+
+toc:
+  - file: index.md
+  - file: why.md
+  - folder: concepts
+    children:
+      - file: index.md
+  - folder: spec
+    children:
+      - file: index.md
+      - file: v1.md
+  - folder: guides
+    children:
+      - file: index.md
+      - file: implementing.md
+      - file: consuming.md
+  - folder: examples
+    children:
+      - file: index.md
+      - file: gh-cli.md
+      - file: git.md
