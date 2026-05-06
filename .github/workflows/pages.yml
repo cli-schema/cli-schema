@@ -19,7 +19,6 @@ jobs:
 
       - name: Build documentation
         uses: elastic/docs-builder@main
-        continue-on-error: true
 
       - name: Overwrite index with custom landing page
         run: cp docs/cli-schema-landing.html .artifacts/docs/html/index.html
