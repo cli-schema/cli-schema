@@ -20,8 +20,6 @@ jobs:
       - name: Build documentation
         uses: elastic/docs-builder@main
         continue-on-error: true
-        with:
-          prefix: ${{ github.event.repository.name }}
 
       - name: Overwrite index with custom landing page
         run: cp docs/cli-schema-landing.html .artifacts/docs/html/index.html
