@@ -26,7 +26,7 @@
         "kind": {
           "type": "string",
           "enum": [
-            "range", "timeSpanRange", "length", "regex",
+            "range", "timeSpanRange", "length", "count", "regex",
             "allowed", "denied", "email", "url", "uriScheme",
             "fileExtensions", "existing", "nonExisting", "rejectSymbolicLinks"
           ]
@@ -64,6 +64,7 @@
           "enum": ["string", "integer", "number", "boolean"]
         },
         "hidden": { "type": "boolean", "default": false },
+        "variadic": { "type": "boolean", "default": false },
         "deprecated": { "$ref": "#/$defs/deprecation" },
         "validations": {
           "type": "array",
