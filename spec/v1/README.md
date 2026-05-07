@@ -151,6 +151,7 @@ A Parameter Object describes a single flag or positional argument.
 | `enumValues` | string[] | — | Allowed values when `type` is `"enum"` |
 | `elementType` | string | — | Type of array elements when `type` is `"array"` |
 | `hidden` | boolean | `false` | Whether the parameter is hidden from help output |
+| `variadic` | boolean | `false` | Whether the positional captures all remaining arguments as a collection. Only meaningful when `role` is `"positional"`. |
 | `deprecated` | boolean \| [Deprecation Object](#111-deprecation-object) | — | Marks the parameter as deprecated |
 | `validations` | [Constraint Object](#62-constraints)[] | — | Validation rules applied to the parameter's value |
 
@@ -179,6 +180,7 @@ Constraints apply validation rules to a parameter's value. Each constraint is an
 | `"url"` | — | Value must be a valid URL |
 | `"uriScheme"` | `values` | Value must have one of the listed URI schemes (e.g. `["http", "https"]`) |
 | `"fileExtensions"` | `values` | Value must have one of the listed file extensions (e.g. `[".json", ".yaml"]`) |
+| `"count"` | `min`, `max` | Collection item count (inclusive). Omit either bound for open ranges. Used with variadic positionals. |
 | `"existing"` | — | Path must exist on the filesystem |
 | `"nonExisting"` | — | Path must not exist on the filesystem |
 | `"rejectSymbolicLinks"` | — | Path must not be a symbolic link |
