@@ -20,6 +20,13 @@ toc:
       - file: index.md
       - file: implementing.md
       - file: consuming.md
+  - folder: use-cases
+    children:
+      - file: index.md
+      - file: ai-agents.md
+      - file: ide-integrations.md
+      - file: reference-generation.md
+      - file: shell-completions.md
   - folder: examples
     children:
       - file: index.md

@@ -355,6 +355,9 @@
     background: var(--bg2);
     padding: 2.2rem 2rem;
     transition: background 0.2s;
+    display: block;
+    text-decoration: none;
+    color: inherit;
   }
   .feature-card:hover { background: #0f1a14; }
 
@@ -463,6 +466,9 @@
     background: var(--bg2);
     padding: 2rem 2rem;
     transition: background 0.2s;
+    display: block;
+    text-decoration: none;
+    color: inherit;
   }
   .use-case:hover { background: #0f1a14; }
 
@@ -645,36 +651,36 @@
   <p class="section-sub">Describe your CLI once in a structured, open format — then let every tool in the ecosystem consume it.</p>
 
   <div class="features-grid">
-    <div class="feature-card">
+    <a class="feature-card" href="/use-cases/ai-agents/">
       <span class="feature-icon">⚡</span>
       <div class="feature-title">AI-agent ready</div>
       <p class="feature-body">Structured enough for LLMs and autonomous agents to reason about your CLI without training data.</p>
-    </div>
-    <div class="feature-card">
+    </a>
+    <a class="feature-card" href="/use-cases/reference-generation/">
       <span class="feature-icon">📖</span>
       <div class="feature-title">Docs generation</div>
       <p class="feature-body">Generate beautiful, accurate reference docs directly from the schema. No more manual maintenance.</p>
-    </div>
-    <div class="feature-card">
+    </a>
+    <a class="feature-card" href="/use-cases/shell-completions/">
       <span class="feature-icon">✅</span>
       <div class="feature-title">Shell completions</div>
       <p class="feature-body">Power tab completions for bash, zsh, fish, and PowerShell from a single source of truth.</p>
-    </div>
-    <div class="feature-card">
+    </a>
+    <a class="feature-card" href="/concepts/">
       <span class="feature-icon">🌐</span>
       <div class="feature-title">Language-agnostic</div>
       <p class="feature-body">Works with any CLI regardless of implementation language — Go, Rust, Python, Ruby, or anything else.</p>
-    </div>
-    <div class="feature-card">
+    </a>
+    <a class="feature-card" href="/spec/v1/">
       <span class="feature-icon">🔍</span>
       <div class="feature-title">Validation</div>
       <p class="feature-body">JSON Schema meta-schema included. Validate any cli-schema document against the spec instantly.</p>
-    </div>
-    <div class="feature-card">
+    </a>
+    <a class="feature-card" href="/why/">
       <span class="feature-icon">🔓</span>
       <div class="feature-title">Open & CC0</div>
       <p class="feature-body">Public domain dedication. No licensing concerns. Use it in any project, commercial or otherwise.</p>
-    </div>
+    </a>
   </div><!-- /.features-grid -->
   </div><!-- /.inner -->
 </section>
@@ -753,26 +759,26 @@
   <p class="section-sub">cli-schema is infrastructure. Build anything on top of it.</p>
 
   <div class="use-cases">
-    <div class="use-case">
+    <a class="use-case" href="/use-cases/ai-agents/">
       <span class="use-case-tag">AI / AGENTS</span>
       <div class="use-case-title">LLM tool calling</div>
       <p class="use-case-body">Give agents a structured view of any CLI without fine-tuning. cli-schema maps directly to function calling schemas.</p>
-    </div>
-    <div class="use-case">
+    </a>
+    <a class="use-case" href="/use-cases/ide-integrations/">
       <span class="use-case-tag">DX</span>
       <div class="use-case-title">IDE integrations</div>
       <p class="use-case-body">Power autocompletion, inline docs, and flag validation inside editors and devtools.</p>
-    </div>
-    <div class="use-case">
+    </a>
+    <a class="use-case" href="/use-cases/reference-generation/">
       <span class="use-case-tag">DOCS</span>
       <div class="use-case-title">Reference generation</div>
       <p class="use-case-body">Always-accurate CLI reference pages, man pages, and --help output generated straight from the schema.</p>
-    </div>
-    <div class="use-case">
+    </a>
+    <a class="use-case" href="/use-cases/shell-completions/">
       <span class="use-case-tag">SHELL</span>
       <div class="use-case-title">Universal completions</div>
       <p class="use-case-body">One schema, completions for every shell. bash, zsh, fish, PowerShell — generated without manual scripts.</p>
-    </div>
+    </a>
   </div>
   </div><!-- /.inner -->
 </section>
