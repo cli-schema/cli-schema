@@ -104,6 +104,28 @@ The root of a schema document is a **Root Object**.
 | `rootDefault` | [Default Handler Object](#10-default-handler-object) | Handler invoked when the program is called with no subcommand |
 | `commands` | [Command Object](#7-command-object)[] | Top-level commands |
 | `namespaces` | [Namespace Object](#8-namespace-object)[] | Named groupings of commands (subcommand namespaces) |
+| `shortcuts` | [Shortcut Object](#51-shortcut-object)[] | Root-level aliases that transparently resolve to a deeper namespace or command path |
+
+### 5.1 Shortcut Object
+
+A Shortcut Object declares a root-level word that the implementation
+transparently rewrites to a full path before routing.
+
+| Field | Type | Description |
+|---|---|---|
+| `from` | string | The root-level word the user types (e.g. `"es"`) |
+| `to` | string[] | The full path it resolves to — may end at a namespace or a command (e.g. `["stack", "es"]` or `["stack", "es", "search"]`) |
+
+Consumers SHOULD treat a shortcut as fully equivalent to its `to` path:
+documentation, shell completion, and agent orchestration MAY expose both
+forms or either form, but MUST NOT assign different semantics to them.
+A shortcut is purely a convenience alias; the canonical path is `to`.
+
+Implementations SHOULD validate at load time that each `to` path resolves
+to an existing namespace or command in the document. Consumers that perform
+their own validation SHOULD emit a warning (not an error) for unresolvable
+shortcuts, since partial documents and forward-declared schemas are valid
+use cases.
 
 ### Example
 

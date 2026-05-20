@@ -177,6 +177,15 @@
       },
       "patternProperties": { "^x-": {} },
       "additionalProperties": false
+    },
+    "shortcut": {
+      "type": "object",
+      "required": ["from", "to"],
+      "properties": {
+        "from": { "type": "string" },
+        "to": { "type": "array", "items": { "type": "string" }, "minItems": 1 }
+      },
+      "additionalProperties": false
     }
   },
   "required": ["schemaVersion", "name", "version"],
@@ -196,7 +205,8 @@
     "globalOptions": { "type": "array", "items": { "$ref": "#/$defs/parameter" } },
     "rootDefault": { "$ref": "#/$defs/defaultHandler" },
     "commands": { "type": "array", "items": { "$ref": "#/$defs/command" } },
-    "namespaces": { "type": "array", "items": { "$ref": "#/$defs/namespace" } }
+    "namespaces": { "type": "array", "items": { "$ref": "#/$defs/namespace" } },
+    "shortcuts": { "type": "array", "items": { "$ref": "#/$defs/shortcut" } }
   },
   "patternProperties": { "^x-": {} },
   "additionalProperties": false
