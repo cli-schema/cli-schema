@@ -54,7 +54,7 @@ def fish_completions(schema: dict) -> str:
                 continue
             flag = param["name"]
             pdesc = param.get("description", "").replace("'", "\\'")
-            short = f" -s {param['short']}" if param.get("short") else ""
+            short = f" -s {param['shortName']}" if param.get("shortName") else ""
             enums = param.get("enumValues", [])
             if enums:
                 for val in enums:
