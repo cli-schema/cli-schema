@@ -71,10 +71,8 @@
           "items": { "$ref": "#/$defs/constraint" }
         }
       },
-      "additionalProperties": {
-        "if": { "type": "string" },
-        "then": { "pattern": "^x-" }
-      }
+      "patternProperties": { "^x-": {} },
+      "additionalProperties": false
     },
     "intent": {
       "type": "object",
@@ -127,20 +125,6 @@
       },
       "additionalProperties": false
     },
-    "deprecationFull": {
-      "oneOf": [
-        { "type": "boolean", "const": true },
-        {
-          "type": "object",
-          "properties": {
-            "message": { "type": "string" },
-            "since": { "type": "string" },
-            "removedIn": { "type": "string" }
-          },
-          "additionalProperties": false
-        }
-      ]
-    },
     "defaultHandler": {
       "type": "object",
       "required": ["kind"],
@@ -153,6 +137,7 @@
         "parameters": { "type": "array", "items": { "$ref": "#/$defs/parameter" } },
         "hidden": { "type": "boolean", "default": false }
       },
+      "patternProperties": { "^x-": {} },
       "additionalProperties": false
     },
     "command": {
@@ -169,12 +154,14 @@
         "aliases": { "type": "array", "items": { "type": "string" } },
         "hidden": { "type": "boolean", "default": false },
         "tags": { "type": "array", "items": { "type": "string" } },
-        "deprecated": { "$ref": "#/$defs/deprecationFull" },
+        "deprecated": { "$ref": "#/$defs/deprecation" },
         "intent": { "$ref": "#/$defs/intent" },
         "output": { "$ref": "#/$defs/output" },
         "streaming": { "type": "boolean", "default": false },
         "longRunning": { "type": "boolean", "default": false }
-      }
+      },
+      "patternProperties": { "^x-": {} },
+      "additionalProperties": false
     },
     "namespace": {
       "type": "object",
@@ -188,6 +175,7 @@
         "commands": { "type": "array", "items": { "$ref": "#/$defs/command" } },
         "namespaces": { "type": "array", "items": { "$ref": "#/$defs/namespace" } }
       },
+      "patternProperties": { "^x-": {} },
       "additionalProperties": false
     }
   },
@@ -209,5 +197,7 @@
     "rootDefault": { "$ref": "#/$defs/defaultHandler" },
     "commands": { "type": "array", "items": { "$ref": "#/$defs/command" } },
     "namespaces": { "type": "array", "items": { "$ref": "#/$defs/namespace" } }
-  }
+  },
+  "patternProperties": { "^x-": {} },
+  "additionalProperties": false
 }

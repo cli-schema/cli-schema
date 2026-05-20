@@ -31,7 +31,7 @@ def render_command(path: list[str], command: dict) -> str:
         lines.append("|------|------|----------|-------------|")
         for p in params:
             name = f"`--{p['name']}`"
-            if short := p.get("short"):
+            if short := p.get("shortName"):
                 name += f" / `-{short}`"
             typ = p.get("type", "string")
             required = "Yes" if p.get("required") else "No"
@@ -79,7 +79,7 @@ def render_man(schema: dict, command: dict, path: list[str]) -> str:
         if p.get("hidden"):
             continue
         flag = f"--{p['name']}"
-        if short := p.get("short"):
+        if short := p.get("shortName"):
             flag = f"-{short}, {flag}"
         lines.append(f".TP")
         lines.append(f".B {flag}")
@@ -89,16 +89,16 @@ def render_man(schema: dict, command: dict, path: list[str]) -> str:
 
 ## Respecting deprecation
 
-Parameters and commands can declare `deprecated` with a `since` version and an optional `alternative`. Always surface this in generated docs:
+Parameters and commands can declare `deprecated` with a `since` version, a `message`, and an optional `removedIn` version. Always surface this in generated docs:
 
 ```python
 def deprecation_notice(item: dict) -> str | None:
     dep = item.get("deprecated")
     if not dep:
         return None
-    msg = f"Deprecated since {dep['since']}."
-    if alt := dep.get("alternative"):
-        msg += f" Use `{alt}` instead."
+    msg = dep.get("message") or f"Deprecated since {dep.get('since', '?')}."
+    if removed := dep.get("removedIn"):
+        msg += f" Will be removed in {removed}."
     return msg
 ```
 
